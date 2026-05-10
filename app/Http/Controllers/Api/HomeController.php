@@ -1,0 +1,92 @@
+<?php
+
+namespace App\Http\Controllers\Api;
+
+use App\Http\Controllers\Controller;
+use App\Models\Product;
+use App\Models\Categories as Category;
+use Illuminate\Support\Facades\Cache;
+
+class HomeController extends Controller
+{
+
+    public function category()
+    {
+        $data = Cache::remember('category', 60, function () {
+            $categories = Category::where('status', 'active')->get();
+
+            $categories->transform(function ($item) {
+                return [
+                    'id' => $item->id,
+                    'name' => $item->name,
+                    'slug' => $item->slug,
+                ];
+            });
+            return $categories;
+        });
+
+        return response()->json([
+            'message' => 'Welcome to the API',
+            'status' => 'success',
+            'categories' => $data
+        ]);
+    }
+
+    public function productsCategory($slug)
+    {
+        $products = Product::with('category')
+            ->where('status', 'active')
+            ->whereHas('category', function ($q) use ($slug) {
+                $q->where('slug', $slug);
+            })
+            ->get();
+
+        $result = [];
+        // dd($products);
+
+        foreach ($products as $item) {
+            $result[] = [
+                'id' => $item->id,
+                'name' => $item->name,
+                'slug' => $item->slug,
+                'description' => $item->description,
+                'price' => $item->price,
+                'image_url' => asset('images/' . $item->image),
+                'category_name' => $item->category->name ?? '',
+            ];
+        }
+
+        return response()->json([
+            'message' => 'Products List',
+            'status' => 'success',
+            'products' => $result
+        ]);
+    }
+    public function products()
+    {
+        $products = Product::with('category')
+            ->where('status', 'active')
+            ->get();
+
+        $result = [];
+        // dd($products);
+
+        foreach ($products as $item) {
+            $result[] = [
+                'id' => $item->id,
+                'name' => $item->name,
+                'slug' => $item->slug,
+                'description' => $item->description,
+                'price' => $item->price,
+                'image_url' => asset('images/' . $item->image),
+                'category_name' => $item->category->name ?? '',
+            ];
+        }
+
+        return response()->json([
+            'message' => 'Products List',
+            'status' => 'success',
+            'products' => $result
+        ]);
+    }
+}

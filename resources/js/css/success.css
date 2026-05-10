@@ -1,0 +1,49 @@
+/* Full page center */
+.success-page {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #f5f7fb;
+}
+
+/* Card styling */
+.success-card {
+  max-width: 400px;
+  width: 100%;
+  padding: 30px 25px;
+  border-radius: 15px;
+  background: #fff;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+/* Success icon */
+.success-icon {
+  font-size: 60px;
+  color: #28a745;
+}
+
+/* Title */
+.success-title {
+  margin-top: 15px;
+  color: #28a745;
+  font-weight: 600;
+}
+
+/* Text */
+.success-text {
+  color: #6c757d;
+  font-size: 14px;
+  margin-top: 10px;
+}
+
+/* Buttons */
+.success-btn {
+  margin-top: 15px;
+}
+
+.success-btn button {
+  width: 100%;
+  margin-bottom: 10px;
+}
