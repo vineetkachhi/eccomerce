@@ -5,18 +5,19 @@ export default function OrdersList() {
 
   const [orders, setOrders] = useState([]); // ✅ array default
   const token = localStorage.getItem('token');
-
-  const fetchOrders = async () => {
+const [pagination, setPagination] = useState({});
+  const fetchOrders = async (page = 1) => {
     try {
-      const res = await api.get('/order-list', {
+      const res = await api.get(`/order-list?page=${page}`, {
         headers: {
-          Authorization: `Bearer ${token}`
+          Authorization: `Bearer ${token}`,
+          Accept: 'application/json'
         }
       });
 
       setOrders(res.data.data);
       console.log(res.data);
-
+      setPagination(res.data.pagination);
     } catch (error) {
       console.log(error);
     }
@@ -25,7 +26,14 @@ export default function OrdersList() {
   useEffect(() => {
     fetchOrders();
   }, []);
+const changePage = (page) => {
+  fetchOrders(page);
 
+  window.scrollTo({
+    top: 0,
+    behavior: 'smooth'
+  });
+};
 
 
   return (
@@ -110,6 +118,49 @@ export default function OrdersList() {
         </div>
       ))}
 
+{
+
+                pagination?.last_page > 1 && (
+
+                    <div className="pagination">
+
+                        <button
+                            className="pagination-btn"
+                            disabled={pagination.current_page === 1}
+                            onClick={() => changePage(pagination.current_page - 1)}
+                        >
+                            ← Prev
+                        </button>
+
+                        <div className="pagination-info">
+
+                            <span className="current-page">
+                                {pagination.current_page}
+                            </span>
+
+                            <span className="pagination-text">
+                                of
+                            </span>
+
+                            <span className="last-page">
+                                {pagination.last_page}
+                            </span>
+
+                        </div>
+
+                        <button
+                            className="pagination-btn"
+                            disabled={pagination.current_page === pagination.last_page}
+                            onClick={() => changePage(pagination.current_page + 1)}
+                        >
+                            Next →
+                        </button>
+
+                    </div>
+
+                )
+
+            }
     </div>
   </div>
 </div>  

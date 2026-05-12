@@ -25,6 +25,7 @@
                                 </div>
                             @endif
                             <div class="table-responsive">
+                                {{ $products->links() }}
                                 <table class="table table-bordered">
                                     <thead>
                                         <tr>
@@ -49,10 +50,14 @@
                                             <tr>
                                                 <td>{{ $loop->iteration }}</td>
 
-                                                <td>{{ $product->name }}</td>
-                                                <td>{{ $product->slug }}</td>
+                                                <td
+                                                    style="max-width:250px; white-space: normal; word-wrap: break-word;">
+                                                    {{ $product->name }}</td>
+                                                <td
+                                                    style="max-width:250px; white-space: normal; word-wrap: break-word;">
+                                                    {{ $product->slug }}</td>
                                                 <td>{{ $product->category->name }}</td>
-                                                <td>{{ number_format($product->price, 2) }}</td>
+                                                <td>₹ {{ number_format($product->price, 2) }}</td>
                                                 <td>
                                                     @if ($product->image)
                                                         <img src="{{ asset('images/' . $product->image) }}"
@@ -61,7 +66,9 @@
                                                         N/A
                                                     @endif
                                                 </td>
-                                                <td>{{ substr($product->description, 0, 100) }}...</td>
+                                                <td
+                                                    style="max-width:250px; white-space: normal; word-wrap: break-word;">
+                                                    {{ $product->description }}</td>
                                                 <td>
                                                     @if ($product->status == 'active')
                                                         <span class="badge badge-success">Active</span>
@@ -69,14 +76,15 @@
                                                         <span class="badge badge-danger">Inactive</span>
                                                     @endif
                                                 </td>
-                                                <td>
+                                                <td style="display: inline-block;">
                                                     <a href="{{ route('product.edit', $product->id) }}"
                                                         class="btn btn-sm btn-primary">Edit</a>
                                                     <form action="{{ route('product.destroy', $product->id) }}"
-                                                        method="POST" style="display:inline-block;">
+                                                        method="POST">
                                                         @csrf
                                                         @method('DELETE')
                                                         <button type="submit" class="btn btn-sm btn-danger"
+                                                            style="margin-top: 5px"
                                                             onclick="return confirm('Are you sure?')">Delete</button>
                                                     </form>
                                                 </td>

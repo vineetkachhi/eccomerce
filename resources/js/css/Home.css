@@ -1,5 +1,5 @@
 /* Home.css */
-
+/* 
 * {
   margin: 0;
   padding: 0;
@@ -13,10 +13,10 @@ body {
 
 .home {
   width: 100%;
-}
+} */
 
 /* Navbar */
-.navbar {
+.navbar-frontend {
   background: #2874f0;
   color: #fff;
   display: flex;
@@ -45,40 +45,63 @@ body {
   min-width: 200px; /* ✅ FIX */
 }
 
-/* Nav links */
-.nav-links {
-  display: flex;
-  align-items: center;
-  gap: 15px;
-  flex-wrap: wrap; /* ✅ FIX */
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    margin-top: 40px;
+    white-space: nowrap;
 }
 
-/* FIX: Welcome + Logout ek line me */
-.nav-links span {
-  display: flex;
-  align-items: center;
-  gap: 5px;
+.pagination-btn {
+    background: #2874f0;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: 0.3s ease;
 }
 
-/* Button */
-.nav-links button {
-  background: #fff;
-  color: #2874f0;
-  border: none;
-  padding: 8px 18px;
-  font-weight: bold;
-  border-radius: 4px;
-  cursor: pointer;
+.pagination-btn:hover {
+    background: #0f5bd3;
 }
 
-/* Link styling FIX */
-.nav-links a {
-  color: #fff;
-  text-decoration: none;
+.pagination-btn:disabled {
+    background: #c7c7c7;
+    cursor: not-allowed;
 }
 
-.nav-links a:hover {
-  text-decoration: underline;
+.pagination-info {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: #fff;
+    padding: 8px 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+.current-page,
+.last-page {
+    width: 35px;
+    height: 35px;
+    background: #2874f0;
+    color: #fff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+}
+
+.pagination-text {
+    font-size: 14px;
+    font-weight: 500;
+    color: #555;
 }
 
 /* Categories */
@@ -198,7 +221,7 @@ header {
 
 /* Responsive */
 @media (max-width: 768px) {
-  .navbar {
+  .navbar-frontend {
     flex-direction: column;
     padding: 15px;
   }

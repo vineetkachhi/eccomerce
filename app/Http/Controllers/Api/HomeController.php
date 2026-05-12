@@ -12,23 +12,23 @@ class HomeController extends Controller
 
     public function category()
     {
-        $data = Cache::remember('category', 60, function () {
-            $categories = Category::where('status', 'active')->get();
+        // $data = Cache::remember('category', 60, function () {
+        $categories = Category::where('status', 'active')->get();
 
-            $categories->transform(function ($item) {
-                return [
-                    'id' => $item->id,
-                    'name' => $item->name,
-                    'slug' => $item->slug,
-                ];
-            });
-            return $categories;
+        $categories->transform(function ($item) {
+            return [
+                'id' => $item->id,
+                'name' => $item->name,
+                'slug' => $item->slug,
+            ];
         });
+        //   return $categories;
+        // });
 
         return response()->json([
             'message' => 'Welcome to the API',
             'status' => 'success',
-            'categories' => $data
+            'categories' => $categories
         ]);
     }
 
@@ -39,7 +39,7 @@ class HomeController extends Controller
             ->whereHas('category', function ($q) use ($slug) {
                 $q->where('slug', $slug);
             })
-            ->get();
+            ->paginate(10);
 
         $result = [];
         // dd($products);
@@ -59,14 +59,22 @@ class HomeController extends Controller
         return response()->json([
             'message' => 'Products List',
             'status' => 'success',
-            'products' => $result
+            'products' => $result,
+            'pagination' => [
+
+                'current_page' => $products->currentPage(),
+                'last_page' => $products->lastPage(),
+                'per_page' => $products->perPage(),
+                'total' => $products->total(),
+
+            ]
         ]);
     }
     public function products()
     {
         $products = Product::with('category')
             ->where('status', 'active')
-            ->get();
+            ->paginate(10);
 
         $result = [];
         // dd($products);
@@ -80,13 +88,22 @@ class HomeController extends Controller
                 'price' => $item->price,
                 'image_url' => asset('images/' . $item->image),
                 'category_name' => $item->category->name ?? '',
+
             ];
         }
 
         return response()->json([
             'message' => 'Products List',
             'status' => 'success',
-            'products' => $result
+            'products' => $result,
+            'pagination' => [
+
+                'current_page' => $products->currentPage(),
+                'last_page' => $products->lastPage(),
+                'per_page' => $products->perPage(),
+                'total' => $products->total(),
+
+            ]
         ]);
     }
 }

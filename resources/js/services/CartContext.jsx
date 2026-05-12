@@ -18,10 +18,12 @@ export const CartProvider = ({ children }) => {
         try {
 
             const token = localStorage.getItem('token');
+            console.log("TOKEN =>", token); 
             if(token){
                 const res = await api.get('/cart-count', {
                     headers: {
-                        Authorization: `Bearer ${token}`
+                        Authorization: `Bearer ${token}`,
+                           Accept: 'application/json'
                     }
                 });
                 console.log(res.data.count);

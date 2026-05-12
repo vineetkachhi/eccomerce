@@ -120,7 +120,8 @@ class PaymentController extends Controller
 
         $orderlist = Orders::with('orderItem.product')
             ->where('user_id', Auth::id())
-            ->get();
+            ->orderBy('id', 'desc')
+            ->paginate(4);
 
         $data = [];
 
@@ -147,6 +148,14 @@ class PaymentController extends Controller
             'status' => true,
             'message' => 'Order list',
             'data' => $data,
+            'pagination' => [
+
+                'current_page' => $orderlist->currentPage(),
+                'last_page' => $orderlist->lastPage(),
+                'per_page' => $orderlist->perPage(),
+                'total' => $orderlist->total(),
+
+            ]
 
         ]);
     }

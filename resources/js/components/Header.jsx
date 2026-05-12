@@ -69,13 +69,14 @@ const [token,setToken] = useState();
 
       {/* Right side */}
       <div className="col-md-6 d-flex justify-content-end align-items-center gap-1">
-
+<Link to="/cart" className="text-white text-decoration-none">
+          🛒 Cart ({cartCount})
+        </Link>
         {token ? (
           <>
             <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
   <span>
-    Welcome,{" "}
-    <Link to="/user/dashboard" style={{ color: "#fff" }}>
+    <Link to="/user/dashboard" style={{ color: "#fff",display:"inline" }}>
       {user?.name}
     </Link>
   </span>
@@ -89,11 +90,9 @@ const [token,setToken] = useState();
           </Link>
         )}
 
-        <Link to="/cart" className="text-white text-decoration-none">
-          🛒 Cart ({cartCount})
-        </Link>
+        
 
-        <span className="text-warning">Become Seller</span>
+        {/* <span className="text-warning">Become Seller</span> */}
       </div>
 
     </div>
@@ -102,8 +101,12 @@ const [token,setToken] = useState();
   {/* Categories */}
   <section className="bg-light py-2 border-bottom">
     <div className="container d-flex gap-4 overflow-auto">
+
+      <div  className="fw-medium text-nowrap" style={{ paddingLeft:"30px",paddingRight:"30px" }}>
+         <Link to={`/product-list/all`}> All</Link>
+        </div>
       {category.map((cat) => (
-        <div key={cat.id} className="fw-medium text-nowrap">
+        <div key={cat.id} className="fw-medium text-nowrap" style={{ paddingLeft:"30px",paddingRight:"30px" }}>
          <Link to={`/product-list/${cat.slug}`}> {cat.name}</Link>
         </div>
       ))}

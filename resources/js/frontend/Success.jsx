@@ -26,7 +26,7 @@ const [searchParams] = useSearchParams();
           </p>
 
           <div className="d-grid gap-2 mt-3">
-            <button className="btn btn-primary" onClick={() => navigate("/dashboard")}>
+            <button className="btn btn-primary" onClick={() => navigate("/user/dashboard")}>
               Go to Dashboard
             </button>
 

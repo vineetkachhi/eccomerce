@@ -1,28 +1,91 @@
-import React, { useEffect, useState,useContext  } from 'react';
-import { ProductContext  } from '../services/ProductContext';
-import Products  from '../components/Products';
+import React, { useEffect, useContext } from 'react';
+import { ProductContext } from '../services/ProductContext';
+import Products from '../components/Products';
 import '../css/product.css';
 import { useParams } from 'react-router-dom';
-export default function ProductList(){
+
+export default function ProductList() {
+
     const { id } = useParams();
-const {products,getProducts} = useContext(ProductContext);
-useEffect(() => {
+
+    const {
+        products,
+        getProducts,
+        pagination
+    } = useContext(ProductContext);
+
+    useEffect(() => {
+
         getProducts(id);
+
     }, [id]);
-return(
-        //   <Products  products={products} />
 
-         <div className="container">
+    const changePage = (page) => {
 
-      <h1 className="title">Product List</h1>
+        getProducts(id, page);
 
-      <div className="product-grid">
+    };
 
-            <Products  products={products} />
-      </div>
+    return (
 
-    </div>
-    
-);
+        <div className="container">
+
+            <h1 className="title">
+                Product List
+            </h1>
+
+            <div className="product-grid">
+
+                <Products products={products} />
+
+            </div>
+
+            {
+
+                pagination?.last_page > 1 && (
+
+                    <div className="pagination">
+
+                        <button
+                            className="pagination-btn"
+                            disabled={pagination.current_page === 1}
+                            onClick={() => changePage(pagination.current_page - 1)}
+                        >
+                            ← Prev
+                        </button>
+
+                        <div className="pagination-info">
+
+                            <span className="current-page">
+                                {pagination.current_page}
+                            </span>
+
+                            <span className="pagination-text">
+                                of
+                            </span>
+
+                            <span className="last-page">
+                                {pagination.last_page}
+                            </span>
+
+                        </div>
+
+                        <button
+                            className="pagination-btn"
+                            disabled={pagination.current_page === pagination.last_page}
+                            onClick={() => changePage(pagination.current_page + 1)}
+                        >
+                            Next →
+                        </button>
+
+                    </div>
+
+                )
+
+            }
+
+        </div>
+
+    );
 
 }
