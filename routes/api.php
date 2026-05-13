@@ -13,6 +13,7 @@ Route::get('/categories', [HomeController::class, 'category']);
 Route::get('/products/{id}', [HomeController::class, 'productsCategory']);
 Route::get('/products', [HomeController::class, 'products']);
 Route::post('/login', [AuthController::class, 'login']);
+Route::post('/signup', [AuthController::class, 'signup']);
 //Route::middleware('auth:sanctum')->post('/logout', [AuthController::class, 'logout']);
 
 Route::middleware('auth:sanctum')->group(function () {

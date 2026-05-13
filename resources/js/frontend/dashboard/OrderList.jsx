@@ -37,132 +37,219 @@ const changePage = (page) => {
 
 
   return (
-    <div className="container mt-4">
-  <div className="row justify-content-center">
-    <div className="col-lg-9">
+    <section className="bg-light py-5" style={{ minHeight: "100vh" }}>
 
-      {/* Header */}
-      <div className="mb-4 d-flex justify-content-between align-items-center">
-        <div>
-          <h3 className="fw-bold mb-1">My Orders</h3>
-          {/* <p className="text-muted mb-0">Track, return or buy things again</p> */}
-        </div>
-      </div>
+  <div className="container">
 
-      {/* Orders */}
-      {orders.map((order) => (
-        <div key={order.order_id} className="card mb-4 border-0 shadow-sm rounded-3">
+    <div className="row justify-content-center">
 
-          {/* Top bar */}
-          <div className="card-header bg-light d-flex justify-content-between align-items-center">
-            <div>
-              <small className="text-muted">ORDER ID</small><br />
-              <strong>{order.order_id}</strong>
-            </div>
+      <div className="col-lg-10">
 
-            <div>
-              <small className="text-muted">DATE</small><br />
-              <strong>{order.date}</strong>
-            </div>
+        {/* Header */}
+        <div className="d-flex justify-content-between align-items-center mb-4">
 
-            <div>
-              <small className="text-muted">TOTAL</small><br />
-              <strong>₹ {order.total}</strong>
-            </div>
+          <div>
+            <h2 className="fw-bold mb-1 text-dark">
+              My Orders
+            </h2>
 
-            <div>
-              <span className={`badge px-3 py-2 ${
-                order.status === 'Delivered' ? 'bg-success' :
-                order.status === 'Processing' ? 'bg-warning text-dark' :
-                'bg-secondary'
-              }`}>
-                {order.status}
+            <p className="text-muted mb-0">
+              Manage and track your orders
+            </p>
+          </div>
+          {/* Pagination */}
+        {pagination?.last_page > 1 && (
+
+          <div className="d-flex justify-content-center align-items-center gap-3 mt-5 flex-wrap">
+
+            <button
+              className="btn btn-outline-primary rounded-pill px-4"
+              disabled={pagination.current_page === 1}
+              onClick={() => changePage(pagination.current_page - 1)}
+            >
+              ← Prev
+            </button>
+
+            <div className="bg-white shadow-sm px-4 py-2 rounded-pill fw-semibold">
+
+              {pagination.current_page}
+
+              <span className="text-muted mx-2">
+                of
               </span>
+
+              {pagination.last_page}
+
             </div>
+
+            <button
+              className="btn btn-outline-primary rounded-pill px-4"
+              disabled={
+                pagination.current_page === pagination.last_page
+              }
+              onClick={() => changePage(pagination.current_page + 1)}
+            >
+              Next →
+            </button>
+
           </div>
 
-          {/* Body */}
-          <div className="card-body">
+        )}
 
-            {/* Items */}
-            <div className="mb-3">
-              <strong>Items:</strong>
-              <div className="text-muted mt-1">
-                {order.items.join(', ')}
+        </div>
+
+        {/* Orders */}
+        {orders.map((order) => (
+
+          <div
+            key={order.order_id}
+            className="card border-0 shadow-sm rounded-4 mb-4 overflow-hidden"
+          >
+
+            {/* Card Header */}
+            <div className="card-header bg-white border-bottom py-3">
+
+              <div className="row text-center text-md-start align-items-center">
+
+                <div className="col-md-3 mb-2 mb-md-0">
+                  <small className="text-muted d-block">
+                    ORDER ID
+                  </small>
+
+                  <span className="fw-semibold">
+                    #{order.order_id}
+                  </span>
+                </div>
+
+                <div className="col-md-3 mb-2 mb-md-0">
+                  <small className="text-muted d-block">
+                    DATE
+                  </small>
+
+                  <span className="fw-semibold">
+                    {order.date}
+                  </span>
+                </div>
+
+                <div className="col-md-3 mb-2 mb-md-0">
+                  <small className="text-muted d-block">
+                    TOTAL
+                  </small>
+
+                  <span className="fw-bold text-success">
+                    ₹ {order.total}
+                  </span>
+                </div>
+
+                <div className="col-md-3 text-md-end">
+
+                  <span
+                    className={`badge px-3 py-2 rounded-pill fs-6 ${
+                      order.status === 'Delivered'
+                        ? 'bg-success'
+                        : order.status === 'Processing'
+                        ? 'bg-warning text-dark'
+                        : 'bg-secondary'
+                    }`}
+                  >
+                    {order.status}
+                  </span>
+
+                </div>
+
               </div>
+
             </div>
 
-            {/* Actions */}
-            <div className="d-flex justify-content-between align-items-center">
+            {/* Card Body */}
+            <div className="card-body p-4">
 
-              <div>
-                <button className="btn btn-primary btn-sm">
-                  View Details
-                </button>
+              {/* Items */}
+              <div className="mb-4">
 
-                <button style={{ marginTop:"5px" }} className="btn btn-outline-secondary btn-sm ">
-                  Track Order
-                </button>
+                <h6 className="fw-bold mb-2">
+                  Ordered Items
+                </h6>
+
+                <p className="text-muted mb-0">
+                  {order.items.join(', ')}
+                </p>
+
               </div>
 
-              <div>
-                <button className="btn btn-link text-decoration-none">
+              {/* Buttons */}
+              <div className="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3">
+
+                <div className="d-flex flex-wrap gap-2">
+
+                  <button className="btn btn-primary rounded-pill px-4">
+                    View Details
+                  </button>
+
+                  <button className="btn btn-outline-secondary rounded-pill px-4">
+                    Track Order
+                  </button>
+
+                </div>
+
+                <button className="btn btn-link text-decoration-none fw-semibold">
                   Buy Again
                 </button>
+
               </div>
 
             </div>
 
           </div>
 
-        </div>
-      ))}
+        ))}
 
-{
+        
 
-                pagination?.last_page > 1 && (
+      </div>
+      {/* Pagination */}
+        {pagination?.last_page > 1 && (
 
-                    <div className="pagination">
+          <div className="d-flex justify-content-center align-items-center gap-3 mt-5 flex-wrap">
 
-                        <button
-                            className="pagination-btn"
-                            disabled={pagination.current_page === 1}
-                            onClick={() => changePage(pagination.current_page - 1)}
-                        >
-                            ← Prev
-                        </button>
+            <button
+              className="btn btn-outline-primary rounded-pill px-4"
+              disabled={pagination.current_page === 1}
+              onClick={() => changePage(pagination.current_page - 1)}
+            >
+              ← Prev
+            </button>
 
-                        <div className="pagination-info">
+            <div className="bg-white shadow-sm px-4 py-2 rounded-pill fw-semibold">
 
-                            <span className="current-page">
-                                {pagination.current_page}
-                            </span>
+              {pagination.current_page}
 
-                            <span className="pagination-text">
-                                of
-                            </span>
+              <span className="text-muted mx-2">
+                of
+              </span>
 
-                            <span className="last-page">
-                                {pagination.last_page}
-                            </span>
+              {pagination.last_page}
 
-                        </div>
+            </div>
 
-                        <button
-                            className="pagination-btn"
-                            disabled={pagination.current_page === pagination.last_page}
-                            onClick={() => changePage(pagination.current_page + 1)}
-                        >
-                            Next →
-                        </button>
+            <button
+              className="btn btn-outline-primary rounded-pill px-4"
+              disabled={
+                pagination.current_page === pagination.last_page
+              }
+              onClick={() => changePage(pagination.current_page + 1)}
+            >
+              Next →
+            </button>
 
-                    </div>
+          </div>
 
-                )
+        )}
 
-            }
     </div>
+
   </div>
-</div>  
+
+</section>
   );
 }

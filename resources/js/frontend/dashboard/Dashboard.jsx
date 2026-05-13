@@ -25,38 +25,94 @@ useEffect(() => {
 }, []);
 
   return (
-    <section>
-    <div className="container mt-4">
-      {/* <h2>User Dashboard</h2> */}
+   <section
+  className="d-flex align-items-center bg-light py-5"
+  style={{ minHeight: "100vh" }}
+>
+  <div className="container">
 
-      {user && (
-        <div className="card p-3">
-          <h4>Welcome, {user.name}</h4>
-          <p>Email: {user.email}</p>
+    <div className="row g-4">
+
+      {/* Left Side Dashboard Menu */}
+      <div className="col-lg-4">
+
+        <div className="card shadow border-0 rounded-4 h-100">
+          <div className="card-body p-4">
+
+            <h4 className="fw-bold mb-4 text-center">
+              User Dashboard
+            </h4>
+
+            <div className="d-grid gap-3">
+
+              <button
+                onClick={() => navigate('/cart')}
+                className="btn btn-primary btn-lg rounded-pill"
+              >
+                🛒 Go to Cart
+              </button>
+
+              <button
+                onClick={() => navigate('/user/orderlist')}
+                className="btn btn-success btn-lg rounded-pill"
+              >
+                📦 My Orders
+              </button>
+
+              <button
+                onClick={() => {
+                  localStorage.removeItem("token");
+                  navigate('/signup');
+                }}
+                className="btn btn-danger btn-lg rounded-pill"
+              >
+                🚪 Logout
+              </button>
+
+            </div>
+
+          </div>
         </div>
-      )}
 
-      <div className="mt-4">
-        <button onClick={() => navigate('/cart')} className="btn btn-primary">
-          Go to Cart
-        </button>
-
-        <button style={{ marginTop:"10px" }} onClick={() => navigate('/user/orderlist')} className="btn btn-success ms-2">
-          My Orders
-        </button>
-
-        <button style={{ marginTop:"10px" }}
-          onClick={() => {
-            localStorage.removeItem("token");
-            navigate('/signup');
-          }}
-          className="btn btn-danger ms-2"
-        >
-          Logout
-        </button>
       </div>
+
+      {/* Right Side User Info */}
+      <div className="col-lg-8">
+
+        {user && (
+          <div className="card shadow border-0 rounded-4">
+            <div className="card-body text-center p-5">
+
+              <div
+                className="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center mx-auto mb-4"
+                style={{
+                  width: "100px",
+                  height: "100px",
+                  fontSize: "40px",
+                  fontWeight: "bold"
+                }}
+              >
+                {user.name.charAt(0).toUpperCase()}
+              </div>
+
+              <h2 className="fw-bold mb-3">
+                Welcome, {user.name}
+              </h2>
+
+              <p className="text-muted fs-5">
+                {user.email}
+              </p>
+
+            </div>
+          </div>
+        )}
+
+      </div>
+
     </div>
-    </section>
+
+  </div>
+</section>
   );
 }
 

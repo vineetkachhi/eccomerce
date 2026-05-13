@@ -151,126 +151,179 @@ const handlePayment = async (e) => {
   };
 
   return (
-    <div className="checkout-page">
+    <section className="bg-light py-5" style={{ minHeight: "100vh" }}>
 
-      <h2>Checkout</h2>
+  <div className="container">
 
-      <div className="checkout-container">
+    <h2 className="text-center fw-bold mb-4">
+      Checkout
+    </h2>
 
-        {/* Left */}
-        <div className="checkout-left">
+    <div className="row g-4">
 
-          <form onSubmit={handlePayment} method="POST">
+      {/* LEFT FORM */}
+      <div className="col-lg-7">
 
-            <h3>Billing Details</h3>
+        <div className="card border-0 shadow-sm rounded-4">
 
-            <input
-              type="text"
-              name="name"
-              placeholder="Full Name"
-              onChange={handleChange}
-              required
-            />
+          <div className="card-body p-4">
 
-            <input
-              type="email"
-              name="email"
-              placeholder="Email Address"
-              onChange={handleChange}
-              required
-            />
+            <form onSubmit={handlePayment}>
 
-            <input
-              type="text"
-              name="phone"
-              placeholder="Mobile Number"
-              onChange={handleChange}
-              required
-            />
+              <h4 className="fw-bold mb-3">Billing Details</h4>
 
-            <textarea
-              name="address"
-              placeholder="Full Address"
-              rows="4"
-              onChange={handleChange}
-              required
-            ></textarea>
+              <div className="mb-3">
+                <input
+                  type="text"
+                  name="name"
+                  className="form-control"
+                  placeholder="Full Name"
+                  onChange={handleChange}
+                  required
+                />
+              </div>
 
-            <div className="row">
-              <input
-                type="text"
-                name="city"
-                placeholder="City"
-                onChange={handleChange}
-                required
-              />
+              <div className="mb-3">
+                <input
+                  type="email"
+                  name="email"
+                  className="form-control"
+                  placeholder="Email Address"
+                  onChange={handleChange}
+                  required
+                />
+              </div>
 
-              <input
-                type="text"
-                name="state"
-                placeholder="State"
-                onChange={handleChange}
-                required
-              />
-            </div>
+              <div className="mb-3">
+                <input
+                  type="text"
+                  name="phone"
+                  className="form-control"
+                  placeholder="Mobile Number"
+                  onChange={handleChange}
+                  required
+                />
+              </div>
 
-            <input
-              type="text"
-              name="postal_code"
-              placeholder="Pincode"
-              onChange={handleChange}
-              required
-            />
+              <div className="mb-3">
+                <textarea
+                  name="address"
+                  className="form-control"
+                  placeholder="Full Address"
+                  rows="4"
+                  onChange={handleChange}
+                  required
+                />
+              </div>
 
-            <h3>Payment Method</h3>
+              <div className="row g-2 mb-3">
 
-            <label>
-              <input
-                type="radio"
-                name="payment"
-                value="cod"
-                checked={form.payment === 'cod'}
-                onChange={handleChange}
-              />
-              Cash on Delivery
-            </label>
+                <div className="col-md-6">
+                  <input
+                    type="text"
+                    name="city"
+                    className="form-control"
+                    placeholder="City"
+                    onChange={handleChange}
+                    required
+                  />
+                </div>
 
-            <label>
-              <input
-                type="radio"
-                name="payment"
-                value="online"
-                onChange={handleChange}
-              />
-              Online Payment
-            </label>
+                <div className="col-md-6">
+                  <input
+                    type="text"
+                    name="state"
+                    className="form-control"
+                    placeholder="State"
+                    onChange={handleChange}
+                    required
+                  />
+                </div>
 
-            <button type="submit"  >
-              Place Order
-            </button>
+              </div>
 
-          </form>
+              <div className="mb-3">
+                <input
+                  type="text"
+                  name="postal_code"
+                  className="form-control"
+                  placeholder="Pincode"
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+
+              <h5 className="fw-bold mt-4 mb-3">
+                Payment Method
+              </h5>
+
+              <div className="form-check mb-2">
+                <input
+                  className="form-check-input"
+                  type="radio"
+                  name="payment"
+                  value="cod"
+                  checked={form.payment === 'cod'}
+                  onChange={handleChange}
+                />
+                <label className="form-check-label">
+                  Cash on Delivery
+                </label>
+              </div>
+
+              <div className="form-check mb-3">
+                <input
+                  className="form-check-input"
+                  type="radio"
+                  name="payment"
+                  value="online"
+                  onChange={handleChange}
+                />
+                <label className="form-check-label">
+                  Online Payment
+                </label>
+              </div>
+
+              <button type="submit" className="btn btn-primary w-100 rounded-pill py-2">
+                Place Order
+              </button>
+
+            </form>
+
+          </div>
 
         </div>
 
-        {/* Right */}
-        <div className="checkout-right">
+      </div>
 
-          <h3>Order Summary</h3>
+      {/* RIGHT SUMMARY */}
+      <div className="col-lg-5">
 
-          <div className="summary-row">
-            <span>Items Total</span>
-            <span>₹{cartTotal}</span>
-          </div>
+        <div className="card border-0 shadow-sm rounded-4">
 
-          <div className="summary-row">
-            <span>Delivery Charge</span>
-            <span>₹0</span>
-          </div>
+          <div className="card-body p-4">
 
-          <div className="summary-row total">
-            <span>Total Amount</span>
-            <span>₹{cartTotal}</span>
+            <h4 className="fw-bold mb-4">
+              Order Summary
+            </h4>
+
+            <div className="d-flex justify-content-between mb-2">
+              <span>Items Total</span>
+              <span>₹{cartTotal}</span>
+            </div>
+
+            <div className="d-flex justify-content-between mb-2">
+              <span>Delivery Charge</span>
+              <span>₹0</span>
+            </div>
+
+            <hr />
+
+            <div className="d-flex justify-content-between fw-bold fs-5">
+              <span>Total Amount</span>
+              <span className="text-success">₹{cartTotal}</span>
+            </div>
+
           </div>
 
         </div>
@@ -278,5 +331,9 @@ const handlePayment = async (e) => {
       </div>
 
     </div>
+
+  </div>
+
+</section>
   );
 }

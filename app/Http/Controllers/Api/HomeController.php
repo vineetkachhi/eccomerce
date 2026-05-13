@@ -39,7 +39,7 @@ class HomeController extends Controller
             ->whereHas('category', function ($q) use ($slug) {
                 $q->where('slug', $slug);
             })
-            ->paginate(10);
+            ->paginate(8);
 
         $result = [];
         // dd($products);
@@ -74,7 +74,7 @@ class HomeController extends Controller
     {
         $products = Product::with('category')
             ->where('status', 'active')
-            ->paginate(10);
+            ->paginate(8);
 
         $result = [];
         // dd($products);

@@ -35,4 +35,29 @@ class AuthController extends Controller
 
         return response()->json(['message' => 'Logged out']);
     }
+
+
+    public function signup(Request $request)
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email',
+            'password' => 'required|min:6'
+        ]);
+
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+            'role' => 'user'
+        ]);
+
+        $token = $user->createToken('react-token')->plainTextToken;
+
+        return response()->json([
+            'message' => 'Signup Successful',
+            'token' => $token,
+            'user' => $user
+        ], 201);
+    }
 }

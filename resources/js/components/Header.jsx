@@ -46,72 +46,92 @@ const [token,setToken] = useState();
     return (
         <>
   {/* Navbar */}
-  <header className="container-fluid bg-dark text-white py-2">
-    <div className="row align-items-center">
+    <section>
+        <nav className="navbar navbar-expand-lg navbar-light" style={{ backgroundColor: "#2980b9" }}>
+            <div className="container-fluid">
+                <Link className="navbar-brand" href="/">
+                    <img src="images/ApniDukan.png" alt="logo" width="45" height="35" className="d-inline-block align-text-top mr-2 navbar-logo" />
+                </Link>
+                <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span className="navbar-toggler-icon"></span>
+                </button>
+                <div className="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul className="navbar-nav ms-auto mb-2 mb-lg-0 text-capitalize">
+                        <ul className="navbar-nav mr-auto mb-2 mb-lg-0 text-capitalize">
+                            <li className="nav-item">
+                                <Link className="nav-link active" aria-current="page" to="/">Home</Link>
+                            </li>
+                            {/* <li className="nav-item text-capitalize">
+                                <a className="nav-link" href="./offers.html">Offers</a>
+                            </li>
+                            <li className="nav-item text-capitalize">
+                                <a className="nav-link" href="./contactus.html">Contact us</a>
+                            </li> */}
+                            
+                                {/* <li className="nav-item text-capitalize">
+                                    <a className="nav-link" href="./about.html">About us</a>
+                                </li> */}
+                            <li className="nav-item dropdown">
+                                <a className="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Category
+                                </a>
+                                <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <li><Link className="dropdown-item" to={`/product-list/all`}> All</Link></li>
+                                    {category.map((cat) => (
+                                        <li key={cat.id}><Link className="dropdown-item" to={`/product-list/${cat.slug}`}>{cat.name}</Link></li>
+                                    ))}
+                                    
+                                    {/* <li><a className="dropdown-item" href="./login.html">Login/Signup</a></li> */}
+                                </ul>
+                            </li>
+                            <li className="nav-item text-capitalize">
+                                <Link className="nav-link" to="cart">🛒 Cart ({cartCount})</Link>
+                            </li>
+                            <li className="nav-item dropdown">
+                                <a className="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    {token ?  user?.name:'SignIn/Signup'}
+                                </a>
+                                <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    {token ? (
+                                        <>
+                                        <li>
+                                            <Link className="dropdown-item" to="/user/dashboard">
+                                                Dashboard
+                                            </Link>
+                                        </li>
 
-      {/* Logo */}
-      <div className="col-md-2">
-        <h4 className="mb-0">
-          <Link to="/" className="text-white text-decoration-none">
-            Fashion
-          </Link>
-        </h4>
-      </div>
+                                        <li>
+                                            <button
+                                                className="dropdown-item"
+                                                onClick={handleLogout}
+                                            >
+                                                Logout
+                                            </button>
+                                        </li> 
+                                        </>       
+                                        ):(
+                                            <>
+                                        <li className="dropdown-item">
+                                            <Link className="nav-link" to="/signin">SignIn</Link>
+                                        </li>   
+                                        <li className="dropdown-item">
+                                            <Link className="nav-link" to="/signup">SignUp</Link>
+                                        </li> 
+                                        </>  
+                                    )}
+                                 </ul>
+                            </li>   
+                        </ul>
+                        <form className="d-flex">
+                            <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
+                            <button className="btn btn-outline-dark" type="submit">Search</button>
+                        </form>
+                        </ul>
+                </div>
+            </div>
+        </nav>
+    </section>
 
-      {/* Search */}
-      <div className="col-md-3">
-        <input
-          type="text"
-          placeholder="Search for Products, Brands and More"
-          className="form-control"
-        />
-      </div>
-
-      {/* Right side */}
-      <div className="col-md-6 d-flex justify-content-end align-items-center gap-1">
-<Link to="/cart" className="text-white text-decoration-none">
-          🛒 Cart ({cartCount})
-        </Link>
-        {token ? (
-          <>
-            <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-  <span>
-    <Link to="/user/dashboard" style={{ color: "#fff",display:"inline" }}>
-      {user?.name}
-    </Link>
-  </span>
-
-  <button onClick={handleLogout}>Logout</button>
-</div>
-          </>
-        ) : (
-          <Link to="/signup" className="btn btn-sm btn-light">
-            Login
-          </Link>
-        )}
-
-        
-
-        {/* <span className="text-warning">Become Seller</span> */}
-      </div>
-
-    </div>
-  </header>
-
-  {/* Categories */}
-  <section className="bg-light py-2 border-bottom">
-    <div className="container d-flex gap-4 overflow-auto">
-
-      <div  className="fw-medium text-nowrap" style={{ paddingLeft:"30px",paddingRight:"30px" }}>
-         <Link to={`/product-list/all`}> All</Link>
-        </div>
-      {category.map((cat) => (
-        <div key={cat.id} className="fw-medium text-nowrap" style={{ paddingLeft:"30px",paddingRight:"30px" }}>
-         <Link to={`/product-list/${cat.slug}`}> {cat.name}</Link>
-        </div>
-      ))}
-    </div>
-  </section>
 </>
       );
     
