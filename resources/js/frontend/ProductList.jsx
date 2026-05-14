@@ -3,15 +3,14 @@ import { ProductContext } from '../services/ProductContext';
 import Products from '../components/Products';
 import '../css/product.css';
 import { useParams } from 'react-router-dom';
-
+import Loader from "../components/Loader";
 export default function ProductList() {
 
     const { id } = useParams();
-
     const {
         products,
         getProducts,
-        pagination
+        pagination,loading
     } = useContext(ProductContext);
 
     useEffect(() => {
@@ -27,7 +26,8 @@ export default function ProductList() {
     };
 
     return (
-
+        <>
+          {loading && <Loader />}
         <div className="container">
 
             <h1 className="title">
@@ -85,7 +85,7 @@ export default function ProductList() {
             }
 
         </div>
-
+</>
     );
 
 }

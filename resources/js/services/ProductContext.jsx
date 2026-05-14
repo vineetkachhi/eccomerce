@@ -4,13 +4,13 @@ import api from '../services/api';
 export const ProductContext = createContext();
 
 export const ProductProvider = ({ children }) => {
-
+ const [loading, setLoading] = useState(false);
     const [products, setProducts] = useState([]);
     const [pagination, setPagination] = useState({});
     const getProducts = async (id = "",page = 1) => {
 
         try {
-
+            setLoading(true);
             let url = '/products';
 
             if (id !== 'all') {
@@ -27,12 +27,14 @@ export const ProductProvider = ({ children }) => {
 
             setProducts(res.data.products);
 
-        setPagination(res.data.pagination);
+            setPagination(res.data.pagination);
 
         } catch (error) {
 
             console.log(error);
 
+        }finally {
+             setLoading(false); 
         }
 
     };
@@ -42,7 +44,8 @@ export const ProductProvider = ({ children }) => {
         <ProductContext.Provider value={{
             products,
             getProducts,
-            pagination
+            pagination,
+            loading
         }}>
 
             {children}

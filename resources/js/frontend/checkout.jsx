@@ -1,8 +1,8 @@
 // Checkout.jsx
 
-import React, { useState,useEffect, use } from 'react';
+import React, { useState,useEffect, useContext } from 'react';
 import { useNavigate,useLocation  } from 'react-router-dom';
-
+import { CartContext } from '../services/CartContext';
 import api from '../services/api';
 export default function Checkout() {
   const [form, setForm] = useState({
@@ -17,9 +17,8 @@ export default function Checkout() {
   });
    const [cartTotal, setCartTotal] = useState(0);
   const navigate = useNavigate();
-  const [cartItems, setCartItems] = useState([]);
   const token = localStorage.getItem('token');
-  
+  const { cartCount, setCartCount,fetchCartItems,cartItems } = useContext(CartContext);
 
   const location = useLocation();
   const data = location.state;
@@ -39,7 +38,7 @@ useEffect(() => {
     console.log(product.id);
 
   } else {
-    fetchCartItems();
+    
   }
 }, [data]); // added dependency
  
@@ -126,21 +125,7 @@ const handlePayment = async (e) => {
   const razor = new window.Razorpay(options);
   razor.open();
 };
-  const fetchCartItems = async () => {
-        try {
-          const res = await api.get('/cart', {
-            headers: {
-              Authorization: `Bearer ${token}`
-            }
-          });
-          console.log(res.data);
-          const total = res.data.cart.reduce((acc, item) => acc + item.total_price, 0);
-          setCartItems(res.data.cart);
-          setCartTotal(total);
-        } catch (error) {
-          console.log(error);
-        }
-    };
+
 
   const placeOrder = (e) => {
     e.preventDefault();
