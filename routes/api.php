@@ -11,7 +11,10 @@ use App\Http\Controllers\Api\PaymentController;
 Route::get('/categories', [HomeController::class, 'category']);
 
 Route::get('/products/{id}', [HomeController::class, 'productsCategory']);
+Route::get('/product-details/{slug}', [HomeController::class, 'productsDetails']);
 Route::get('/products', [HomeController::class, 'products']);
+
+
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/signup', [AuthController::class, 'signup']);
 //Route::middleware('auth:sanctum')->post('/logout', [AuthController::class, 'logout']);

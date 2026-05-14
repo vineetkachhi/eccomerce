@@ -3,6 +3,8 @@ import React, { useEffect, useState,useContext  } from 'react';
 import Products  from '../components/Products';
 import api from '../services/api';
 import Loader from "../components/Loader";
+import Slider from "../components/Slider";
+import Offer from "../components/Offer";
 export default function Home() {
 
 const [loading, setLoading] = useState(false);
@@ -34,7 +36,8 @@ return (
   <div>
 
     {loading && <Loader />}
-
+    <Slider />
+    <Offer />
     {/* PAGE ALWAYS RENDER */}
     <section className="offer">
       <div className="text-center my-5">

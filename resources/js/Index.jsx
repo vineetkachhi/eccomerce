@@ -13,14 +13,17 @@ import Dashboard from "./frontend/dashboard/Dashboard";
 import OrdersList from "./frontend/dashboard/OrderList";
 import ProductList from "./frontend/ProductList";
 import Loader from "./components/Loader";
+import ProductDetails from "./frontend/ProductDetails";
 
-function Layout() {
+import { CartProvider } from './services/CartContext';
+import { ProductProvider } from './services/ProductContext';
 
+export default function Layout() {
   const location = useLocation();
-const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
 
- const hiddenPaths = ["/signin", "/signup", "/forgot-password"];
-const hideLayout = hiddenPaths.includes(location.pathname);
+  const hiddenPaths = ["/signin", "/signup", "/forgot-password"];
+  const hideLayout = hiddenPaths.includes(location.pathname);
 
   return (
     <>
@@ -32,27 +35,17 @@ const hideLayout = hiddenPaths.includes(location.pathname);
         <Route path="/checkout" element={<Checkout />} />
         <Route path="/payment-success" element={<Success />} />
         <Route path="/product-list/:id" element={<ProductList />} />
-
+        <Route path="/product-details/:slug" element={<ProductDetails />} />
         <Route path="/user/dashboard" element={<Dashboard />} />
         <Route path="/user/orderlist" element={<OrdersList />} />
-
-        {/* SignIn / Signup */}
         <Route path="/signin" element={<SignIn />} />
         <Route path="/signup" element={<SignUp />} />
       </Routes>
 
       {!hideLayout && <Footer />}
 
-      {/* GLOBAL LOADER OVERLAY */}
       {loading && <Loader />}
     </>
   );
 }
 
-export default function App() {
-  return (
-    <BrowserRouter>
-      <Layout />
-    </BrowserRouter>
-  );
-}

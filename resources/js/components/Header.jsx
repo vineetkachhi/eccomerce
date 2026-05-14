@@ -50,7 +50,7 @@ const [token,setToken] = useState();
         <nav className="navbar navbar-expand-lg navbar-light" style={{ backgroundColor: "#2980b9" }}>
             <div className="container-fluid">
                 <Link className="navbar-brand" href="/">
-                    <img src="images/ApniDukan.png" alt="logo" width="45" height="35" className="d-inline-block align-text-top mr-2 navbar-logo" />
+                    <img src="/images/ApniDukan.png" alt="logo" width="45" height="35" className="d-inline-block align-text-top mr-2 navbar-logo" />
                 </Link>
                 <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span className="navbar-toggler-icon"></span>

@@ -35,7 +35,7 @@
                                             <th>Category</th>
                                             <th>Price</th>
                                             <th>Imgae</th>
-                                            <th>Description</th>
+                                            {{-- <th>Description</th> --}}
                                             <th>Status</th>
                                             <th>Actions</th>
                                         </tr>
@@ -66,9 +66,9 @@
                                                         N/A
                                                     @endif
                                                 </td>
-                                                <td
+                                                {{-- <td
                                                     style="max-width:250px; white-space: normal; word-wrap: break-word;">
-                                                    {{ $product->description }}</td>
+                                                    {{ $product->description }}</td> --}}
                                                 <td>
                                                     @if ($product->status == 'active')
                                                         <span class="badge badge-success">Active</span>

@@ -106,4 +106,29 @@ class HomeController extends Controller
             ]
         ]);
     }
+
+
+    public function  productsDetails($slug)
+    {
+        $product = Product::with('category')
+            ->where('status', 'active')
+            ->where('slug', $slug)
+            ->first();
+
+
+        return response()->json([
+            'message' => 'Products Details',
+            'status' => 'success',
+            'product' => [
+                'id' => $product->id,
+                'name' => $product->name,
+                'slug' => $product->slug,
+                'description' => $product->description,
+                'price' => $product->price,
+                'image_url' => asset('images/' . $product->image),
+                'category_name' => $product->category->name ?? '',
+            ]
+
+        ]);
+    }
 }

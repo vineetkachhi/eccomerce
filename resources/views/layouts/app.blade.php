@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}" />
     <link rel="shortcut icon" href="{{ asset('assets/images/favicon.png') }}" />
     <!-- Scripts -->
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @vite(['resources/css/app.css', 'resources/js/app.jsx'])
 </head>
 
 <body>
