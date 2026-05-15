@@ -1,29 +1,35 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-
-export default function Dashboard() {
+import api from "../../services/api";
+export default function AddressList() {
     const navigate = useNavigate();
     const [user, setUser] = useState(null);
-
+    const [addresList, setAddressList] = useState([]);
+    const token = localStorage.getItem("token");
     useEffect(() => {
-        const token = localStorage.getItem("token");
-        //console.log("work ");
         if (!token) {
             navigate("/signup");
         } else {
-            const userData = localStorage.getItem("user");
-
-            if (userData) {
-                const user = JSON.parse(userData); // ✅ important
-
-                setUser({
-                    name: user.name,
-                    email: user.email,
-                });
-            }
+            getAddressList();
         }
     }, []);
+    const getAddressList = async () => {
+        try {
+            const res = await api.get("/address-list", {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                    Accept: "application/json",
+                },
+            });
 
+            setAddressList(res.data.data);
+            console.log(res.data.data);
+        } catch (error) {
+            console.log(error);
+        } finally {
+            // setLoading(false);
+        }
+    };
     return (
         <section
             className="d-flex align-items-center bg-light py-5"
@@ -80,31 +86,45 @@ export default function Dashboard() {
 
                     {/* Right Side User Info */}
                     <div className="col-lg-8">
-                        {user && (
-                            <div className="card shadow border-0 rounded-4">
-                                <div className="card-body text-center p-5">
-                                    <div
-                                        className="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center mx-auto mb-4"
-                                        style={{
-                                            width: "100px",
-                                            height: "100px",
-                                            fontSize: "40px",
-                                            fontWeight: "bold",
-                                        }}
-                                    >
-                                        {user.name.charAt(0).toUpperCase()}
-                                    </div>
-
-                                    <h2 className="fw-bold mb-3">
-                                        Welcome, {user.name}
-                                    </h2>
-
-                                    <p className="text-muted fs-5">
-                                        {user.email}
-                                    </p>
-                                </div>
+                        <div className="card shadow border-0 rounded-4">
+                            <div className="card-header bg-white border-0 pt-4 px-4">
+                                <h4 className="fw-bold mb-0">
+                                    📍 My Address List
+                                </h4>
                             </div>
-                        )}
+
+                            <div className="card-body p-4">
+                                {addresList.map((list) => (
+                                    <div
+                                        key={list.id}
+                                        className="border rounded-3 p-3 mb-3 d-flex justify-content-between align-items-start"
+                                    >
+                                        <div>
+                                            <h6 className="fw-bold mb-1">
+                                                Home
+                                            </h6>
+                                            <p className="mb-1 text-muted">
+                                                {list.name},{list.address},{" "}
+                                                {list.city},{list.state} -{" "}
+                                                {list.postal_code}
+                                            </p>
+                                            {/* <small className="text-success">
+                                                Default Address
+                                            </small> */}
+                                        </div>
+
+                                        <div className="btn-group">
+                                            <button className="btn btn-sm btn-outline-primary">
+                                                Edit
+                                            </button>
+                                            <button className="btn btn-sm btn-outline-danger">
+                                                Delete
+                                            </button>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

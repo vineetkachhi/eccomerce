@@ -18,7 +18,7 @@ class HomeController extends Controller
         $categories->transform(function ($item) {
             return [
                 'id' => $item->id,
-                'name' => $item->name,
+                'name' => ucwords($item->name),
                 'slug' => $item->slug,
             ];
         });
@@ -47,7 +47,7 @@ class HomeController extends Controller
         foreach ($products as $item) {
             $result[] = [
                 'id' => $item->id,
-                'name' => $item->name,
+                'name' => ucwords($item->name),
                 'slug' => $item->slug,
                 'description' => $item->description,
                 'price' => $item->price,
@@ -82,7 +82,7 @@ class HomeController extends Controller
         foreach ($products as $item) {
             $result[] = [
                 'id' => $item->id,
-                'name' => $item->name,
+                'name' => ucwords($item->name),
                 'slug' => $item->slug,
                 'description' => $item->description,
                 'price' => $item->price,
@@ -121,7 +121,7 @@ class HomeController extends Controller
             'status' => 'success',
             'product' => [
                 'id' => $product->id,
-                'name' => $product->name,
+                'name' => ucwords($product->name),
                 'slug' => $product->slug,
                 'description' => $product->description,
                 'price' => $product->price,

@@ -3,11 +3,13 @@
 import React, { useState,useEffect,useContext } from 'react';
 import api from '../services/api';
 import { CartContext } from '../services/CartContext';
+import { ProductContext } from '../services/ProductContext';
+import Loader from "../components/Loader";
 export default function Cart() {
 
 
 const token = localStorage.getItem('token');
-const { cartCount, setCartCount,increaseQty,fetchCartItems,cartItems,decreaseQty,removeItem } = useContext(CartContext);
+const { cartCount,increaseQty,fetchCartItems,cartItems,decreaseQty,removeItem,loading } = useContext(CartContext);
   
 useEffect(() => {
     fetchCartItems();
@@ -31,7 +33,8 @@ useEffect(() => {
   }
 
   return (
-    
+    <>
+     {loading && <Loader />}
     <section>
       <div style={{ margin: "20px 20px" }} className="row">
         
@@ -55,7 +58,7 @@ useEffect(() => {
             {cartItems?.length === 0 ? (
                 <p>Your cart is empty.</p>
             ) : (cartItems?.length > 0 && cartItems.map(item => (
-          <div
+          <div key={item.id}
             className="box1-sz"
             style={{
               marginTop: "15px",
@@ -323,6 +326,6 @@ useEffect(() => {
 
       </div>
     </section>
- 
+ </>
   );
 }

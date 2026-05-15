@@ -7,9 +7,7 @@ export default function Footer() {
                 style={{ fontSize: "18px" }}
             >
                 <div className="container text-md-left">
-
                     <div className="row text-md-left">
-
                         {/* Get to Know Us */}
                         <div className="col mt-3" style={{ color: "#808080" }}>
                             <h5 className="text-uppercase mb-4 font-weight-bold md-sz">
@@ -17,9 +15,9 @@ export default function Footer() {
                             </h5>
 
                             <p>
-                                ApniDukan is a modern online shopping platform designed 
-                                to provide customers with a simple, fast, and secure
-                                 shopping experience.
+                                ApniDukan is a modern online shopping platform
+                                designed to provide customers with a simple,
+                                fast, and secure shopping experience.
                             </p>
                         </div>
 
@@ -54,10 +52,7 @@ export default function Footer() {
                                     Return policy
                                 </a>
                             </p>
-
                         </div>
-
-                        
 
                         {/* Social Media */}
                         <div className="col mt-3" style={{ color: "#808080" }}>
@@ -89,7 +84,6 @@ export default function Footer() {
                                 </p>
                             </div>
                         </div>
-
                     </div>
 
                     <hr className="mb-4" />
@@ -101,7 +95,6 @@ export default function Footer() {
                             ApniDukaan | Vineet kumar
                         </div>
                     </div>
-
                 </div>
             </footer>
         </>

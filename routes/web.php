@@ -8,7 +8,6 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\OrderController;
 
 
-
 Route::prefix('admin')->group(function () {
 
     Route::get('/', function () {

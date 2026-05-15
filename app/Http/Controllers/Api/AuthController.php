@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use App\Events\UserRegistered;
 
 class AuthController extends Controller
 {
@@ -51,6 +52,7 @@ class AuthController extends Controller
             'password' => Hash::make($request->password),
             'role' => 'user'
         ]);
+        event(new UserRegistered($user));
 
         $token = $user->createToken('react-token')->plainTextToken;
 

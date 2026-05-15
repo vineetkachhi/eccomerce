@@ -9,6 +9,12 @@ class AppServiceProvider extends ServiceProvider
     /**
      * Register any application services.
      */
+    protected $listen = [
+        \App\Events\UserRegistered::class => [
+            \App\Listeners\SendWelcomeEmail::class,
+        ],
+    ];
+
     public function register(): void
     {
         //

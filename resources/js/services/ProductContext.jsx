@@ -1,23 +1,21 @@
 import { createContext, useState } from "react";
-import api from '../services/api';
+import api from "../services/api";
 
 export const ProductContext = createContext();
 
 export const ProductProvider = ({ children }) => {
- const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState(false);
     const [products, setProducts] = useState([]);
+    const [productsDetails, setProductsDetails] = useState([]);
     const [pagination, setPagination] = useState({});
-    const getProducts = async (id = "",page = 1) => {
-
+    const getProducts = async (id = "", page = 1) => {
         try {
             setLoading(true);
-            let url = '/products';
+            let url = "/products";
 
-            if (id !== 'all') {
-
+            if (id !== "all") {
                 url = `/products/${id}?page=${page}`;
-
-            }else{
+            } else {
                 url = `/products?page=${page}`;
             }
 
@@ -28,30 +26,40 @@ export const ProductProvider = ({ children }) => {
             setProducts(res.data.products);
 
             setPagination(res.data.pagination);
-
         } catch (error) {
-
             console.log(error);
-
-        }finally {
-             setLoading(false); 
+        } finally {
+            setLoading(false);
         }
+    };
 
+    const getProductDetails = async (slug) => {
+        try {
+            setLoading(true);
+            let url = `/product-details/${slug}`;
+            const res = await api.get(url);
+
+            setProductsDetails(res.data.product);
+            console.log(res.data.product.name);
+        } catch (error) {
+            console.log(error);
+        } finally {
+            setLoading(false);
+        }
     };
 
     return (
-
-        <ProductContext.Provider value={{
-            products,
-            getProducts,
-            pagination,
-            loading
-        }}>
-
+        <ProductContext.Provider
+            value={{
+                products,
+                getProducts,
+                pagination,
+                loading,
+                getProductDetails,
+                productsDetails,
+            }}
+        >
             {children}
-
         </ProductContext.Provider>
-
     );
-
 };

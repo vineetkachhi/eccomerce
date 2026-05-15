@@ -7,6 +7,7 @@ use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\CartController;
 use App\Http\Controllers\Api\CheckoutController;
 use App\Http\Controllers\Api\PaymentController;
+use App\Http\Controllers\Api\UserController;
 
 Route::get('/categories', [HomeController::class, 'category']);
 
@@ -24,11 +25,13 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/cart', [CartController::class, 'index']);
     Route::post('/update-cart', [CartController::class, 'update']);
     Route::post('/remove-cart', [CartController::class, 'remove']);
+    Route::get('/cart-count', [CartController::class, 'cartCount']);
     Route::post('/merge-cart', [CartController::class, 'merge']);
     Route::post('/logout_data', [AuthController::class, 'logout']);
     Route::post('/checkout', [CheckoutController::class, 'checkout']);
     Route::get('/order-list', [PaymentController::class, 'orderList']);
     Route::post('/create-order', [PaymentController::class, 'createOrder']);
     Route::post('/verify-payment', [PaymentController::class, 'verify']);
-    Route::get('/cart-count', [CartController::class, 'cartCount']);
+
+    Route::get('/address-list', [UserController::class, 'index']);
 });

@@ -1,54 +1,48 @@
 // Home.jsx
-import React, { useEffect, useState,useContext  } from 'react';
-import Products  from '../components/Products';
-import api from '../services/api';
+import React, { useEffect, useState, useContext } from "react";
+import Products from "../components/Products";
+import api from "../services/api";
 import Loader from "../components/Loader";
 import Slider from "../components/Slider";
 import Offer from "../components/Offer";
 export default function Home() {
-
-const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState(false);
     const [products, setProducts] = useState([]);
 
     useEffect(() => {
-        getProducts(); 
+        getProducts();
     }, []);
 
     const getProducts = async () => {
         try {
-            setLoading(true);  
+            setLoading(true);
 
-            let url = '/products';
+            let url = "/products";
             const res = await api.get(url);
 
             setProducts(res.data.products.slice(0, 8));
-
         } catch (error) {
             console.log(error);
-
         } finally {
-            setLoading(false);  
+            setLoading(false);
         }
     };
 
+    return (
+        <div>
+            {loading && <Loader />}
+            <Slider />
+            <Offer />
+            {/* PAGE ALWAYS RENDER */}
+            <section className="offer">
+                <div className="text-center my-5">
+                    <h1 className="display-4">Big Billion Days Sale</h1>
+                    <p>Up to 80% Off on Top Brands</p>
+                    <hr className="w-25 mx-auto" />
+                </div>
 
-return (
-  <div>
-
-    {loading && <Loader />}
-    <Slider />
-    <Offer />
-    {/* PAGE ALWAYS RENDER */}
-    <section className="offer">
-      <div className="text-center my-5">
-        <h1 className="display-4">Big Billion Days Sale</h1>
-        <p>Up to 80% Off on Top Brands</p>
-        <hr className="w-25 mx-auto" />
-      </div>
-
-      <Products products={products} />
-    </section>
-
-  </div>
-);
+                <Products products={products} />
+            </section>
+        </div>
+    );
 }

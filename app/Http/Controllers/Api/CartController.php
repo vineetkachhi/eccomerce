@@ -13,25 +13,36 @@ class CartController extends Controller
 
     public function index()
     {
-        $cartItems = Cart::with('product')->where('user_id', Auth::id())->get();
+        $cartItems = Cart::with('product')
+            ->where('user_id', Auth::id())
+            ->get();
+
         $data = [];
+        $totalAmount = 0;
+
         foreach ($cartItems as $item) {
+
+            $itemTotal = $item->qty * $item->product->price;
+
+            $totalAmount += $itemTotal;
+
             $data[] = [
                 'id' => $item->product,
                 'product_id' => $item->product_id,
                 'qty' => $item->qty,
                 'product' => $item->product,
-                'total_price' => $item->qty * $item->product->price,
-                'image_url' =>  asset('images/' . $item->product->image),
+                'total_price' => $itemTotal,
+                'image_url' => asset('images/' . $item->product->image),
                 'category_name' => $item->product->category->name ?? '',
-                'name' => $item->product->name,
+                'name' => ucwords($item->product->name),
                 'price' => $item->product->price,
             ];
         }
 
         return response()->json([
             'status' => true,
-            'cart' => $data
+            'cart' => $data,
+            'total_amount' => $totalAmount
         ]);
     }
 
