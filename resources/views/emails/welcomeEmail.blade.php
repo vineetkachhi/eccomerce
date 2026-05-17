@@ -31,7 +31,7 @@
                         <td style="padding:40px 35px; color:#333333;">
 
                             <h2 style="margin-top:0; font-size:24px; color:#111827;">
-                                Hello {{ usfirst($user->name) }},
+                                Hello {{ ucfirst($user->name) }},
                             </h2>
 
                             <p style="font-size:16px; line-height:28px; color:#4b5563;">

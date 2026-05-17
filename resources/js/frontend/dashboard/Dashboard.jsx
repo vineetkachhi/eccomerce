@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-
+import SideBarMenu from "./SideBarMenu";
 export default function Dashboard() {
     const navigate = useNavigate();
     const [user, setUser] = useState(null);
@@ -32,51 +32,7 @@ export default function Dashboard() {
             <div className="container">
                 <div className="row g-4">
                     {/* Left Side Dashboard Menu */}
-                    <div className="col-lg-4">
-                        <div className="card shadow border-0 rounded-4 h-100">
-                            <div className="card-body p-4">
-                                <h4 className="fw-bold mb-4 text-center">
-                                    User Dashboard
-                                </h4>
-
-                                <div className="d-grid gap-3">
-                                    <button
-                                        onClick={() => navigate("/cart")}
-                                        className="btn btn-primary btn-lg rounded-pill"
-                                    >
-                                        🛒 Go to Cart
-                                    </button>
-
-                                    <button
-                                        onClick={() =>
-                                            navigate("/user/orderlist")
-                                        }
-                                        className="btn btn-success btn-lg rounded-pill"
-                                    >
-                                        📦 My Orders
-                                    </button>
-                                    <button
-                                        onClick={() =>
-                                            navigate("/user/address-list")
-                                        }
-                                        className="btn btn-warning btn-lg rounded-pill"
-                                    >
-                                        Address List
-                                    </button>
-
-                                    <button
-                                        onClick={() => {
-                                            localStorage.removeItem("token");
-                                            navigate("/signup");
-                                        }}
-                                        className="btn btn-danger btn-lg rounded-pill"
-                                    >
-                                        🚪 Logout
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <SideBarMenu />
 
                     {/* Right Side User Info */}
                     <div className="col-lg-8">

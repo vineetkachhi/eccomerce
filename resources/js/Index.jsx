@@ -12,6 +12,8 @@ import Success from "./frontend/Success";
 import Dashboard from "./frontend/dashboard/Dashboard";
 import OrdersList from "./frontend/dashboard/OrderList";
 import AddressList from "./frontend/dashboard/AddressList";
+import AddressAdd from "./frontend/dashboard/AddressAdd";
+import AddressEdit from "./frontend/dashboard/AddressEdit";
 import ProductList from "./frontend/ProductList";
 import Loader from "./components/Loader";
 import ProductDetails from "./frontend/ProductDetails";
@@ -62,6 +64,8 @@ export default function Layout() {
                 <Route path="/user/dashboard" element={<Dashboard />} />
                 <Route path="/user/orderlist" element={<OrdersList />} />
                 <Route path="/user/address-list" element={<AddressList />} />
+                <Route path="/user/address-add" element={<AddressAdd />} />
+                <Route path="/user/address-edit" element={<AddressEdit />} />
             </Routes>
 
             {!hideLayout && <Footer />}

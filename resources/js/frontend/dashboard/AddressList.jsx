@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../../services/api";
+import SideBarMenu from "./SideBarMenu";
+import Loader from "../../components/Loader";
 export default function AddressList() {
     const navigate = useNavigate();
     const [user, setUser] = useState(null);
     const [addresList, setAddressList] = useState([]);
     const token = localStorage.getItem("token");
+    const [loading, setLoading] = useState(false);
     useEffect(() => {
         if (!token) {
             navigate("/signup");
@@ -14,6 +17,7 @@ export default function AddressList() {
         }
     }, []);
     const getAddressList = async () => {
+        setLoading(true);
         try {
             const res = await api.get("/address-list", {
                 headers: {
@@ -27,107 +31,118 @@ export default function AddressList() {
         } catch (error) {
             console.log(error);
         } finally {
-            // setLoading(false);
+            setLoading(false);
+        }
+    };
+
+    const handleAddressDelete = async (id) => {
+        if (window.confirm("Are you sure you want to delete this address?")) {
+            try {
+                await api.post(
+                    `/delete-address/${id}`,
+                    {},
+                    {
+                        headers: {
+                            Authorization: `Bearer ${token}`,
+                            Accept: "application/json",
+                        },
+                    },
+                );
+                getAddressList();
+            } catch (error) {
+                console.log(error);
+            }
         }
     };
     return (
-        <section
-            className="d-flex align-items-center bg-light py-5"
-            style={{ minHeight: "100vh" }}
-        >
-            <div className="container">
-                <div className="row g-4">
-                    {/* Left Side Dashboard Menu */}
-                    <div className="col-lg-4">
-                        <div className="card shadow border-0 rounded-4 h-100">
-                            <div className="card-body p-4">
-                                <h4 className="fw-bold mb-4 text-center">
-                                    User Dashboard
-                                </h4>
+        <>
+            {loading && <Loader />}
+            <section
+                className="d-flex align-items-center bg-light py-5"
+                style={{ minHeight: "100vh" }}
+            >
+                <div className="container">
+                    <div className="row g-4">
+                        {/* Left Side Dashboard Menu */}
+                        <SideBarMenu />
 
-                                <div className="d-grid gap-3">
-                                    <button
-                                        onClick={() => navigate("/cart")}
-                                        className="btn btn-primary btn-lg rounded-pill"
-                                    >
-                                        🛒 Go to Cart
-                                    </button>
+                        {/* Right Side User Info */}
+                        <div className="col-lg-8">
+                            <div className="card shadow border-0 rounded-4">
+                                <div className="card-header bg-white border-0 pt-4 px-4 d-flex justify-content-between align-items-center">
+                                    <h4 className="fw-bold mb-0">
+                                        📍 My Address List
+                                    </h4>
 
                                     <button
                                         onClick={() =>
-                                            navigate("/user/orderlist")
+                                            navigate("/user/address-add")
                                         }
-                                        className="btn btn-success btn-lg rounded-pill"
+                                        className="btn btn-sm btn-outline-success"
                                     >
-                                        📦 My Orders
+                                        + Add New Address
                                     </button>
-                                    <button
-                                        onClick={() =>
-                                            navigate("/user/address-list")
-                                        }
-                                        className="btn btn-warning btn-lg rounded-pill"
-                                    >
-                                        Address List
-                                    </button>
+                                </div>
 
-                                    <button
-                                        onClick={() => {
-                                            localStorage.removeItem("token");
-                                            navigate("/signup");
-                                        }}
-                                        className="btn btn-danger btn-lg rounded-pill"
-                                    >
-                                        🚪 Logout
-                                    </button>
+                                <div className="card-body p-4">
+                                    {addresList && addresList.length > 0 ? (
+                                        addresList.map((list) => (
+                                            <div
+                                                key={list.id}
+                                                className="border rounded-3 p-3 mb-3 d-flex justify-content-between align-items-start"
+                                            >
+                                                <div>
+                                                    <h6 className="fw-bold mb-1">
+                                                        Home
+                                                    </h6>
+                                                    <p className="mb-1 text-muted">
+                                                        {list.name},{" "}
+                                                        {list.address},{" "}
+                                                        {list.city},{" "}
+                                                        {list.state} -{" "}
+                                                        {list.postal_code}
+                                                    </p>
+                                                </div>
+
+                                                <div className="btn-group">
+                                                    <button
+                                                        onClick={() =>
+                                                            navigate(
+                                                                "/user/address-edit",
+                                                                {
+                                                                    state: list,
+                                                                },
+                                                            )
+                                                        }
+                                                        className="btn btn-sm btn-outline-primary"
+                                                    >
+                                                        Edit
+                                                    </button>
+
+                                                    <button
+                                                        onClick={() =>
+                                                            handleAddressDelete(
+                                                                list.id,
+                                                            )
+                                                        }
+                                                        className="btn btn-sm btn-outline-danger"
+                                                    >
+                                                        Delete
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        ))
+                                    ) : (
+                                        <div className="text-center py-4 text-muted">
+                                            No address found
+                                        </div>
+                                    )}
                                 </div>
                             </div>
                         </div>
                     </div>
-
-                    {/* Right Side User Info */}
-                    <div className="col-lg-8">
-                        <div className="card shadow border-0 rounded-4">
-                            <div className="card-header bg-white border-0 pt-4 px-4">
-                                <h4 className="fw-bold mb-0">
-                                    📍 My Address List
-                                </h4>
-                            </div>
-
-                            <div className="card-body p-4">
-                                {addresList.map((list) => (
-                                    <div
-                                        key={list.id}
-                                        className="border rounded-3 p-3 mb-3 d-flex justify-content-between align-items-start"
-                                    >
-                                        <div>
-                                            <h6 className="fw-bold mb-1">
-                                                Home
-                                            </h6>
-                                            <p className="mb-1 text-muted">
-                                                {list.name},{list.address},{" "}
-                                                {list.city},{list.state} -{" "}
-                                                {list.postal_code}
-                                            </p>
-                                            {/* <small className="text-success">
-                                                Default Address
-                                            </small> */}
-                                        </div>
-
-                                        <div className="btn-group">
-                                            <button className="btn btn-sm btn-outline-primary">
-                                                Edit
-                                            </button>
-                                            <button className="btn btn-sm btn-outline-danger">
-                                                Delete
-                                            </button>
-                                        </div>
-                                    </div>
-                                ))}
-                            </div>
-                        </div>
-                    </div>
                 </div>
-            </div>
-        </section>
+            </section>
+        </>
     );
 }

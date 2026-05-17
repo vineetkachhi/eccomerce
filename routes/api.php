@@ -34,4 +34,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/verify-payment', [PaymentController::class, 'verify']);
 
     Route::get('/address-list', [UserController::class, 'index']);
+    Route::post('/add-address', [UserController::class, 'store']);
+    Route::post('/update-address/{id}', [UserController::class, 'update']);
+    Route::post('/delete-address/{id}', [UserController::class, 'destroy']);
 });

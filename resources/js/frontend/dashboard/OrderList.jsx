@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import api from "../../services/api";
 import Loader from "../../components/Loader";
+import SideBarMenu from "./SideBarMenu";
 export default function OrdersList() {
     const [orders, setOrders] = useState([]); // ✅ array default
     const token = localStorage.getItem("token");
@@ -41,10 +42,17 @@ export default function OrdersList() {
     return (
         <>
             {loading && <Loader />}
-            <section className="bg-light py-5" style={{ minHeight: "100vh" }}>
+            <section
+                className="d-flex align-items-center bg-light py-5"
+                style={{ minHeight: "100vh" }}
+            >
                 <div className="container">
-                    <div className="row justify-content-center">
-                        <div className="col-lg-10">
+                    <div className="row g-4">
+                        {/* Left Side Dashboard Menu */}
+                        <SideBarMenu />
+
+                        {/* Right Side User Info */}
+                        <div className="col-lg-8">
                             {/* Header */}
                             <div className="d-flex justify-content-between align-items-center mb-4">
                                 <div>
