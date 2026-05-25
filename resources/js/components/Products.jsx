@@ -3,8 +3,6 @@ import { CartContext } from "../services/CartContext";
 import { useNavigate, Link } from "react-router-dom";
 import React, { useEffect, useState, useContext } from "react";
 export default function Products({ products }) {
-    const token = localStorage.getItem("token");
-    const navigate = useNavigate();
     const { cartCount, setCartCount } = useContext(CartContext);
     const { addToCart } = useContext(CartContext);
     const { handleBuyNow } = useContext(CartContext);

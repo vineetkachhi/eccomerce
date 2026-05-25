@@ -5,6 +5,7 @@ import React, { useState } from "react";
 import api from "../../services/api";
 import { Link } from "react-router-dom";
 import "../../static/signup.css";
+import { toast } from "react-toastify";
 export default function SignUp() {
     const [form, setForm] = useState({
         email: "",
@@ -28,15 +29,16 @@ export default function SignUp() {
                 localStorage.setItem("token", res.data.token);
                 localStorage.setItem("user", JSON.stringify(res.data.user));
                 await mergeGuestCart();
+                toast.success("Signup successful");
                 window.location.href = "/";
                 // Handle successful login (e.g., store token, redirect)
             })
             .catch((err) => {
                 console.error(err);
                 if (err.response && err.response.data.message) {
-                    setError(err.response.data.message);
+                    toast.error(err.response.data.message);
                 } else {
-                    setError("Something went wrong");
+                    toast.error("Something went wrong");
                 }
             });
     };

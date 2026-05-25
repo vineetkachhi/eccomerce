@@ -12,7 +12,7 @@ class UserController extends Controller
 
     public function index()
     {
-        $list = Address::where('user_id', Auth::id())->get();
+        $list = Address::where('user_id', Auth::id())->orderBy('created_at', 'desc')->get();
         $data = [];
 
         foreach ($list as $item) {

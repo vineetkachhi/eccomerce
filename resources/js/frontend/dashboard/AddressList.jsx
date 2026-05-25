@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import api from "../../services/api";
 import SideBarMenu from "./SideBarMenu";
 import Loader from "../../components/Loader";
+import { toast } from "react-toastify";
 export default function AddressList() {
     const navigate = useNavigate();
     const [user, setUser] = useState(null);
@@ -36,23 +37,77 @@ export default function AddressList() {
     };
 
     const handleAddressDelete = async (id) => {
-        if (window.confirm("Are you sure you want to delete this address?")) {
-            try {
-                await api.post(
-                    `/delete-address/${id}`,
-                    {},
-                    {
-                        headers: {
-                            Authorization: `Bearer ${token}`,
-                            Accept: "application/json",
-                        },
-                    },
-                );
-                getAddressList();
-            } catch (error) {
-                console.log(error);
-            }
-        }
+        toast(
+            ({ closeToast }) => (
+                <div>
+                    <p>Are you sure you want to delete this address?</p>
+
+                    <div
+                        style={{
+                            display: "flex",
+                            gap: "10px",
+                            marginTop: "10px",
+                        }}
+                    >
+                        <button
+                            onClick={async () => {
+                                try {
+                                    await api.post(
+                                        `/delete-address/${id}`,
+                                        {},
+                                        {
+                                            headers: {
+                                                Authorization: `Bearer ${token}`,
+                                                Accept: "application/json",
+                                            },
+                                        },
+                                    );
+
+                                    toast.success(
+                                        "Address deleted successfully!",
+                                    );
+
+                                    getAddressList();
+                                } catch (error) {
+                                    console.log(error);
+
+                                    toast.error("Something went wrong!");
+                                }
+
+                                closeToast();
+                            }}
+                            style={{
+                                background: "red",
+                                color: "#fff",
+                                border: "none",
+                                padding: "6px 12px",
+                                cursor: "pointer",
+                                borderRadius: "5px",
+                            }}
+                        >
+                            Yes
+                        </button>
+
+                        <button
+                            onClick={closeToast}
+                            style={{
+                                background: "#ccc",
+                                border: "none",
+                                padding: "6px 12px",
+                                cursor: "pointer",
+                                borderRadius: "5px",
+                            }}
+                        >
+                            Cancel
+                        </button>
+                    </div>
+                </div>
+            ),
+            {
+                autoClose: false,
+                closeOnClick: false,
+            },
+        );
     };
     return (
         <>

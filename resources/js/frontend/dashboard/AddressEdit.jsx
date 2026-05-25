@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, useParams, useLocation } from "react-router-dom";
 import api from "../../services/api";
 import SideBarMenu from "./SideBarMenu";
+import { toast } from "react-toastify";
 export default function AddressAdd() {
     const location = useLocation();
     const [form, setForm] = useState(
@@ -56,15 +57,16 @@ export default function AddressAdd() {
                 },
             );
 
-            if (res.data.status === "success") {
-                alert("Address Updated successfully!");
+            if (res.data.status) {
+                toast.success("Address Updated successfully!");
+                // alert("Address Updated successfully!");
                 navigate("/user/address-list");
             } else {
-                alert(res.data.message || "Something went wrong!");
+                toast.error(res.data.message || "Something went wrong!");
             }
         } catch (error) {
             console.error(error);
-            alert("Server error! Please try again.");
+            toast.error("Server error! Please try again.");
         }
     };
 

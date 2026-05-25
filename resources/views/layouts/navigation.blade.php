@@ -1,9 +1,9 @@
 <nav class="sidebar sidebar-offcanvas" id="sidebar">
     <div class="text-center sidebar-brand-wrapper d-flex align-items-center">
         <a class="sidebar-brand brand-logo" href="{{ route('dashboard') }}  "><img
-                src="{{ asset('assets/images/logo.svg') }}" alt="logo" /></a>
+                src="{{ asset('/images/ApniDukan.png') }}" alt="logo" /></a>
         <a class="sidebar-brand brand-logo-mini pl-4 pt-3" href="{{ route('dashboard') }}"><img
-                src="{{ asset('assets/images/logo-mini.svg') }}" alt="logo" /></a>
+                src="{{ asset('/images/ApniDukan.png') }}" alt="logo" /></a>
     </div>
     <ul class="nav">
         <li class="nav-item nav-profile">

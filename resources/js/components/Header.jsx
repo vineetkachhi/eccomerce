@@ -1,10 +1,12 @@
 import api from "../services/api";
 import React, { useEffect, useState, useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Dashboard from "../frontend/dashboard/Dashboard";
 import { CartContext } from "../services/CartContext";
+import { toast } from "react-toastify";
 export default function Header() {
     const [category, setCategory] = useState([]);
+    const navigate = useNavigate();
     const { cartCount } = useContext(CartContext);
     const [user, setUser] = useState(null);
     const [token, setToken] = useState();
@@ -38,11 +40,13 @@ export default function Header() {
                 },
             );
         } catch (error) {
-            console.error(error);
+            // console.error(error);
+            toast.error("Failed to logout");
         } finally {
             localStorage.removeItem("token");
             localStorage.removeItem("user");
-            window.location.href = "/";
+            toast.success("Logout successful");
+            navigate(0);
         }
     };
 

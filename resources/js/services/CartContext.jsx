@@ -1,6 +1,7 @@
 import { createContext, useEffect, useState } from "react";
 import api from "./api";
 import { useNavigate, Link } from "react-router-dom";
+import { toast } from "react-toastify";
 export const CartContext = createContext();
 
 export const CartProvider = ({ children }) => {
@@ -49,9 +50,9 @@ export const CartProvider = ({ children }) => {
                     },
                 );
                 setCartCount(cartCount + 1);
-                alert("Added to cart");
+                toast.success("Added to cart");
             } catch (error) {
-                console.log(error);
+                toast.error("Failed to add to cart");
             }
         } else {
             // Guest user localStorage cart
@@ -70,8 +71,7 @@ export const CartProvider = ({ children }) => {
             }
 
             localStorage.setItem("cart", JSON.stringify(cart));
-
-            alert("Added to cart");
+            toast.success("Added to cart");
         }
     };
 
@@ -108,7 +108,7 @@ export const CartProvider = ({ children }) => {
             );
             localStorage.setItem("cart", JSON.stringify(cart));
         }
-        alert("QTY increased");
+        toast.success("Quantity increased");
         setCartItems(
             cartItems.map((item) =>
                 item.id === id ? { ...item, qty: item.qty + 1 } : item,
@@ -164,7 +164,7 @@ export const CartProvider = ({ children }) => {
             );
             localStorage.setItem("cart", JSON.stringify(cart));
         }
-        alert("QTY decreased");
+        toast.success("Quantity decreased");
         setCartItems(
             cartItems.map((item) =>
                 item.id === id && item.qty > 1
@@ -186,13 +186,13 @@ export const CartProvider = ({ children }) => {
                         },
                     },
                 );
-                alert("Item removed from cart");
+                toast.success("Item removed from cart");
                 const updatedCart = cartItems.filter((item) => item.id !== id);
 
                 setCartItems(updatedCart);
                 setCartCount(updatedCart.length);
             } catch (error) {
-                console.log(error);
+                toast.error("Failed to remove item from cart");
             }
         } else {
             let cart = JSON.parse(localStorage.getItem("cart")) || [];
@@ -200,7 +200,7 @@ export const CartProvider = ({ children }) => {
             cart = cart.filter((item) => item.id !== id);
 
             localStorage.setItem("cart", JSON.stringify(cart));
-            alert("Item removed from cart");
+            toast.success("Item removed from cart");
             setCartItems(cart);
             setCartCount(cart.length);
         }
